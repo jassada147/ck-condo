@@ -48,17 +48,13 @@ db.serialize(() => {
 // ITEMS
 // =====================
 
-// รายการทั้งหมด
 app.get("/list", (req, res) => {
   db.all("SELECT * FROM items ORDER BY id DESC", (err, rows) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
+    if (err) return res.status(500).json(err);
     res.json(rows);
   });
 });
 
-// เพิ่มรายการ
 app.post("/add", (req, res) => {
   const { title, price, type } = req.body;
 
@@ -66,9 +62,7 @@ app.post("/add", (req, res) => {
     "INSERT INTO items (title, price, type) VALUES (?,?,?)",
     [title, price, type],
     function (err) {
-      if (err) {
-        return res.status(500).json(err);
-      }
+      if (err) return res.status(500).json(err);
 
       res.json({
         ok: true,
@@ -82,7 +76,6 @@ app.post("/add", (req, res) => {
 // BOOKINGS
 // =====================
 
-// จอง
 app.post("/book", (req, res) => {
   const { name, phone, service } = req.body;
 
@@ -90,9 +83,7 @@ app.post("/book", (req, res) => {
     "INSERT INTO bookings (name, phone, service) VALUES (?,?,?)",
     [name, phone, service],
     function (err) {
-      if (err) {
-        return res.status(500).json(err);
-      }
+      if (err) return res.status(500).json(err);
 
       res.json({
         ok: true,
@@ -102,13 +93,9 @@ app.post("/book", (req, res) => {
   );
 });
 
-// รายการจอง
 app.get("/bookings", (req, res) => {
   db.all("SELECT * FROM bookings ORDER BY id DESC", (err, rows) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
-
+    if (err) return res.status(500).json(err);
     res.json(rows);
   });
 });
@@ -118,17 +105,13 @@ app.get("/bookings", (req, res) => {
 // =====================
 
 app.post("/login", (req, res) => {
-
   const { username, password } = req.body;
 
   db.get(
     "SELECT * FROM users WHERE username=? AND password=?",
     [username, password],
     (err, row) => {
-
-      if (err) {
-        return res.status(500).json(err);
-      }
+      if (err) return res.status(500).json(err);
 
       if (row) {
         res.json({
@@ -140,10 +123,8 @@ app.post("/login", (req, res) => {
           ok: false
         });
       }
-
     }
   );
-
 });
 
 // =====================
@@ -151,26 +132,20 @@ app.post("/login", (req, res) => {
 // =====================
 
 app.post("/register", (req, res) => {
-
   const { username, password } = req.body;
 
   db.run(
     "INSERT INTO users(username,password) VALUES(?,?)",
     [username, password],
     function (err) {
-
-      if (err) {
-        return res.status(500).json(err);
-      }
+      if (err) return res.status(500).json(err);
 
       res.json({
         ok: true,
         id: this.lastID
       });
-
     }
   );
-
 });
 
 // =====================
@@ -178,69 +153,5 @@ app.post("/register", (req, res) => {
 // =====================
 
 app.listen(PORT, () => {
-  console.log("CK Condo running on " + PORT);
-});
-
-});
-
-// =====================
-// ITEMS
-// =====================
-app.get("/list", (req, res) => {
-  db.all("SELECT * FROM items ORDER BY id DESC", (err, rows) => {
-    res.json(rows);
-  });
-});
-
-app.post("/add", (req, res) => {
-  const { title, price, type } = req.body;
-
-  db.run(
-    "INSERT INTO items (title, price, type) VALUES (?,?,?)",
-    [title, price, type],
-    () => res.json({ ok: true })
-  );
-});
-
-// =====================
-// BOOKINGS
-// =====================
-app.post("/book", (req, res) => {
-  const { name, phone, service } = req.body;
-
-  db.run(
-    "INSERT INTO bookings (name, phone, service) VALUES (?,?,?)",
-    [name, phone, service],
-    () => res.json({ ok: true })
-  );
-});
-
-app.get("/bookings", (req, res) => {
-  db.all("SELECT * FROM bookings ORDER BY id DESC", (err, rows) => {
-    res.json(rows);
-  });
-});
-
-// =====================
-// LOGIN
-// =====================
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-
-  db.get(
-    "SELECT * FROM users WHERE username=? AND password=?",
-    [username, password],
-    (err, row) => {
-      if (row) {
-        res.json({ ok: true });
-      } else {
-        res.json({ ok: false });
-      }
-    }
-  );
-});
-
-// =====================
-app.listen(PORT, () => {
-  console.log("CK Condo running on " + PORT);
+  console.log(`CK Condo running on ${PORT}`);
 });
