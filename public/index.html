@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>CK Condo</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<header>
+  <img src="/Logo QT.png" class="logo">
+  <h1>CK Condo</h1>
+  <p>Property Platform</p>
+</header>
+
+<main>
+
+<h2>เพิ่มคอนโด</h2>
+
+<input id="title" placeholder="ชื่อ">
+<input id="price" placeholder="ราคา">
+<input id="type" placeholder="type">
+
+<button onclick="addItem()">➕ เพิ่ม</button>
+
+<hr>
+
+<h2>จองบริการ</h2>
+
+<input id="name" placeholder="ชื่อ">
+<input id="phone" placeholder="เบอร์">
+
+<select id="service">
+  <option value="buy">ซื้อ</option>
+  <option value="sell">ขาย</option>
+  <option value="rent">เช่า</option>
+  <option value="clean">ล้างแอร์</option>
+  <option value="repair">ซ่อม</option>
+</select>
+
+<button onclick="book()">📌 จอง</button>
+
+<hr>
+
+<h2>รายการ</h2>
+<div id="list"></div>
+
+</main>
+
+<script src="/app.js"></script>
+
+</body>
+</html>

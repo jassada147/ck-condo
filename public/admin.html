@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<script>
+if (localStorage.getItem("ck_admin") !== "true") {
+  window.location = "/login.html";
+}
+</script>
+
+<title>Admin</title>
+</head>
+
+<body style="font-family:Arial">
+
+<h2>📋 Admin Booking</h2>
+
+<div id="list"></div>
+
+<script>
+async function load() {
+  const res = await fetch("/bookings");
+  const data = await res.json();
+
+  list.innerHTML = data.map(b => `
+    <div style="border:1px solid #ddd;margin:10px;padding:10px">
+      <b>${b.name}</b><br>
+      ${b.phone}<br>
+      ${b.service}
+    </div>
+  `).join("");
+}
+
+load();
+</script>
+
+</body>
+</html>

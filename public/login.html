@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+
+<body style="font-family:Arial;text-align:center;padding:50px">
+
+<h2>CK Condo Login</h2>
+
+<input id="u" placeholder="username"><br><br>
+<input id="p" type="password" placeholder="password"><br><br>
+
+<button onclick="login()">Login</button>
+
+<script>
+async function login() {
+  const res = await fetch("/login", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: u.value,
+      password: p.value
+    })
+  });
+
+  const data = await res.json();
+
+  if (data.ok) {
+    localStorage.setItem("ck_admin","true");
+    window.location = "/admin.html";
+  } else {
+    alert("login ไม่ผ่าน");
+  }
+}
+</script>
+
+</body>
+</html>
